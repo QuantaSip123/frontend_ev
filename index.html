@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapbox Example</title>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+        .checkbox-container { position: absolute; top: 10px; left: 10px; background-color: white; padding: 10px; z-index: 1;}
+   </style>
+</head>
+<body>
+
+<div id="map"></div>
+<div id="output"></div>
+<div class="checkbox-container">
+    <input type="checkbox" id="petrol-pump" >
+    <label for="petrol-pump">petrol pump</label><br>
+
+    <input type="checkbox" id="parking" >
+    <label for="parking"> parking</label><br>
+
+    <input type="checkbox" id="toll-plaza" >
+    <label for="toll-plaza">Toll Plaza</label><br>
+
+    <input type="checkbox" id="nearest-electrical-station" >
+    <label for="nearest-electrical-station">Electrical-Station</label><br>
+ 
+ 
+
+
+
+</div>
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2FuaTA0MDEiLCJhIjoiY2xqczZkMno0MG5raDNqbGw3ZXJkbDRoMCJ9.PMe0Is-c78_veieQCviKfQ'; // Replace with your Mapbox access token
+
+    // Initialize the map with Thane's coordinates
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [72.8826, 19.2183],
+        zoom: 9 
+    });
+</script>
+
+<script>
+    // Function to add marker to the map
+    function addMarker(lng, lat, name) {
+        // Create a marker element
+        var marker = new mapboxgl.Marker()
+            .setLngLat([lng, lat]) // Set marker coordinates
+            .setPopup(new mapboxgl.Popup().setHTML(`<h3>${name}</h3>`)) // Add a popup with the name
+            .addTo(map); // Add marker to the map
+        return marker; // Return the marker instance
+    }
+
+    // Function to remove marker from the map
+    function removeMarker(marker) {
+        marker.remove(); // Remove the marker from the map
+    }
+
+    // Function to make API call
+    function callAPI() {
+        // Make an API call to the specified endpoint
+        fetch('https://jalindar0-82ue.vercel.app/pump/coordinates')
+            .then(response => response.json())
+            .then(data => {
+                // Handle the API response data here
+                data.forEach(item => {
+                    // Add marker and store the instance
+                    var marker = addMarker(item.longitude, item.latitude, item.name);
+                    // Store marker instance in a variable or array
+                    markers.push(marker);
+                });
+                console.log(data);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error:', error);
+            });
+    }
+
+    // Array to store marker instances
+    var markers = [];
+
+    // Get reference to the checkbox
+    const checkbox = document.getElementById('petrol-pump');
+
+    // Add event listener to the checkbox
+    checkbox.addEventListener('change', function() {
+        // Check if checkbox is checked
+        if (this.checked) {
+            // If checked, call the API
+            callAPI();
+        } else {
+            // If unchecked, remove all markers
+            markers.forEach(removeMarker);
+            markers = []; // Clear the markers array
+        }
+    });
+</script>
+
+<script>
+    // Function to add marker to the map
+    function addMarker(lng, lat, name) {
+        // Create a marker element
+        var marker = new mapboxgl.Marker()
+            .setLngLat([lng, lat]) // Set marker coordinates
+            .setPopup(new mapboxgl.Popup().setHTML(`<h3>${name}</h3>`)) // Add a popup with the name
+            .addTo(map); // Add marker to the map
+        return marker; // Return the marker instance
+    }
+
+    // Function to remove marker from the map
+    function removeMarker(marker) {
+        marker.remove(); // Remove the marker from the map
+    }
+
+    // Function to make API call
+    function callAPIp() {
+        // Make an API call to the specified endpoint
+        fetch('https://jalindar0-82ue.vercel.app/parking/coordinates')
+            .then(response => response.json())
+            .then(data => {
+                // Handle the API response data here
+                data.forEach(item => {
+                    // Add marker and store the instance
+                    var marker = addMarker(item.longitude, item.latitude, item.name);
+                    // Store marker instance in a variable or array
+                    markers.push(marker);
+                });
+                console.log(data);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error:', error);
+            });
+    }
+
+    // Array to store marker instances
+    var markers = [];
+
+    // Get reference to the checkbox
+    const checkboxp = document.getElementById('parking');
+
+    // Add event listener to the checkbox
+    checkboxp.addEventListener('change', function() {
+        // Check if checkbox is checked
+        if (this.checked) {
+            // If checked, call the API
+            callAPIp();
+        } else {
+            // If unchecked, remove all markers
+            markers.forEach(removeMarker);
+            markers = []; // Clear the markers array
+        }
+    });
+</script>
+
+<script>
+    // Function to add marker to the map
+    function addMarker(lng, lat, name) {
+        // Create a marker element
+        var marker = new mapboxgl.Marker()
+            .setLngLat([lng, lat]) // Set marker coordinates
+            .setPopup(new mapboxgl.Popup().setHTML(`<h3>${name}</h3>`)) // Add a popup with the name
+            .addTo(map); // Add marker to the map
+        return marker; // Return the marker instance
+    }
+
+    // Function to remove marker from the map
+    function removeMarker(marker) {
+        marker.remove(); // Remove the marker from the map
+    }
+
+    // Function to make API call
+    function callAPIt() {
+        // Make an API call to the specified endpoint
+        fetch('https://jalindar0-82ue.vercel.app/toll-plaza/coordinates')
+            .then(response => response.json())
+            .then(data => {
+                // Handle the API response data here
+                data.forEach(item => {
+                    // Add marker and store the instance
+                    var marker = addMarker(item.longitude, item.latitude, item.name);
+                    // Store marker instance in a variable or array
+                    markers.push(marker);
+                });
+                console.log(data);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error:', error);
+            });
+    }
+
+    // Array to store marker instances
+    var markers = [];
+
+    // Get reference to the checkbox
+    const checkboxt = document.getElementById('toll-plaza');
+
+    // Add event listener to the checkbox
+    checkboxt.addEventListener('change', function() {
+        // Check if checkbox is checked
+        if (this.checked) {
+            // If checked, call the API
+            callAPIt();
+        } else {
+            // If unchecked, remove all markers
+            markers.forEach(removeMarker);
+            markers = []; // Clear the markers array
+        }
+    });
+</script>
+
+<script>
+    // Function to add marker to the map
+    function addMarker(lng, lat, name) {
+        // Create a marker element
+        var marker = new mapboxgl.Marker()
+            .setLngLat([lng, lat]) // Set marker coordinates
+            .setPopup(new mapboxgl.Popup().setHTML(`<h3>${name}</h3>`)) // Add a popup with the name
+            .addTo(map); // Add marker to the map
+        return marker; // Return the marker instance
+    }
+
+    // Function to remove marker from the map
+    function removeMarker(marker) {
+        marker.remove(); // Remove the marker from the map
+    }
+
+    // Function to make API call
+    function callAPIes() {
+        // Make an API call to the specified endpoint
+        fetch('https://jalindar0-82ue.vercel.app/electric-substation/coordinates')
+            .then(response => response.json())
+            .then(data => {
+                // Handle the API response data here
+                data.forEach(item => {
+                    // Add marker and store the instance
+                    var marker = addMarker(item.longitude, item.latitude, item.name);
+                    // Store marker instance in a variable or array
+                    markers.push(marker);
+                });
+                console.log(data);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error:', error);
+            });
+    }
+
+    // Array to store marker instances
+    var markers = [];
+
+    // Get reference to the checkbox
+    const checkboxes = document.getElementById('nearest-electrical-station');
+
+    // Add event listener to the checkbox
+    checkboxes.addEventListener('change', function() {
+        // Check if checkbox is checked
+        if (this.checked) {
+            // If checked, call the API
+            callAPIes();
+        } else {
+            // If unchecked, remove all markers
+            markers.forEach(removeMarker);
+            markers = []; // Clear the markers array
+        }
+    });
+</script>
+
+
+
+
+
+</body>
+</html>
