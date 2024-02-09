@@ -6,75 +6,111 @@
     <title>Mapbox Example</title>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
-    <style>
-        body { margin: 0; padding: 0; }
-        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
-        .checkbox-container { position: absolute; top: 10px; left: 10px; background-color: white; padding: 10px; z-index: 1;}
-        .checkbox-wrapper input[type="checkbox"] {
-            visibility: hidden;
-            display: none;
-        }
-        .checkbox-wrapper .toggle {
-            position: relative;
-            display: block;
-            width: 40px;
-            height: 20px;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-            transform: translate3d(0, 0, 0);
-        }
-        .checkbox-wrapper .toggle:before {
-            content: "";
-            position: relative;
-            top: 3px;
-            left: 3px;
-            width: 34px;
-            height: 14px;
-            display: block;
-            background: #9A9999;
-            border-radius: 8px;
-            transition: background 0.2s ease;
-        }
-        .checkbox-wrapper .toggle span {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 20px;
-            height: 20px;
-            display: block;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 3px 8px rgba(154, 153, 153, 0.5);
-            transition: all 0.2s ease;
-        }
-        .checkbox-wrapper .toggle span:before {
-            content: "";
-            position: absolute;
-            display: block;
-            margin: -18px;
-            width: 56px;
-            height: 56px;
-            background: rgba(79, 46, 220, 0.5);
-            border-radius: 50%;
-            transform: scale(0);
-            opacity: 1;
-            pointer-events: none;
-        }
-        .checkbox-wrapper input[type="checkbox"]:checked + .toggle:before {
-            background: #947ADA;
-        }
-        .checkbox-wrapper input[type="checkbox"]:checked + .toggle span {
-            background: #4F2EDC;
-            transform: translateX(20px);
-            transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25), background 0.15s ease;
-            box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
-        }
-        .checkbox-wrapper input[type="checkbox"]:checked + .toggle span:before {
-            transform: scale(1);
-            opacity: 0;
-            transition: all 0.4s ease;
-        }
-   </style>
+   
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+    }
+
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .checkbox-container {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+    }
+
+    .checkbox-wrapper input[type="checkbox"] {
+        visibility: hidden;
+        display: none;
+    }
+
+    .toggle {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 20px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        transform: translate3d(0, 0, 0);
+    }
+
+    .toggle:before {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 34px;
+        height: 14px;
+        display: block;
+        background: #d1d1d1;
+        border-radius: 8px;
+        transition: background 0.2s ease;
+    }
+
+    .toggle span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        display: block;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(154, 153, 153, 0.5);
+        transition: all 0.2s ease;
+    }
+
+    .toggle span:before {
+        content: "";
+        position: absolute;
+        display: block;
+        margin: -18px;
+        width: 56px;
+        height: 56px;
+        background: rgba(79, 46, 220, 0.5);
+        border-radius: 50%;
+        transform: scale(0);
+        opacity: 1;
+        pointer-events: none;
+    }
+
+    input[type="checkbox"]:checked + .toggle:before {
+        background: #947ADA;
+    }
+
+    input[type="checkbox"]:checked + .toggle span {
+        background: #4F2EDC;
+        transform: translateX(20px);
+        transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25), background 0.15s ease;
+        box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
+    }
+
+    input[type="checkbox"]:checked + .toggle span:before {
+        transform: scale(1);
+        opacity: 0;
+        transition: all 0.4s ease;
+    }
+
+    .checkbox-label {
+        font-size: 16px;
+        margin-left: 10px;
+    }
+    </style>
 </head>
 <body>
 
@@ -90,7 +126,7 @@
     <div class="checkbox-wrapper">
         <input type="checkbox" id="parking" >
         <label for="parking" class="toggle"><span></span></label>
-        <label for="parking"> Parking Area</label><br>
+        <label for="parking"> Parking</label><br>
     </div>
 
     <div class="checkbox-wrapper">
@@ -114,15 +150,22 @@
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [72.8826, 19.2183],
-        zoom: 9 
+        zoom: 10
     });
 </script>
 
 <script>
     // Function to add marker to the map
-    function addMarker(lng, lat, name) {
-        // Create a marker element
-        var marker = new mapboxgl.Marker()
+    function addMarker3(lng, lat, name) {
+        // Create a marker element with custom image
+        var el = document.createElement('div');
+        el.className = 'custom-marker';
+        el.style.backgroundImage = 'url(petrol.svg)';
+        el.style.width = '25px'; // Adjust width as needed
+        el.style.height = '25px'; // Adjust height as needed
+
+        // Create marker instance using custom element
+        var marker = new mapboxgl.Marker(el)
             .setLngLat([lng, lat]) // Set marker coordinates
             .setPopup(new mapboxgl.Popup().setHTML(`<h3>${name}</h3>`)) // Add a popup with the name
             .addTo(map); // Add marker to the map
@@ -143,7 +186,7 @@
                 // Handle the API response data here
                 data.forEach(item => {
                     // Add marker and store the instance
-                    var marker = addMarker(item.longitude, item.latitude, item.name);
+                    var marker = addMarker3(item.longitude, item.latitude, item.name);
                     // Store marker instance in a variable or array
                     markers.push(marker);
                 });
@@ -177,9 +220,16 @@
 
 <script>
     // Function to add marker to the map
-    function addMarker(lng, lat, name) {
-        // Create a marker element
-        var marker = new mapboxgl.Marker()
+    function addMarker2(lng, lat, name) {
+        // Create a marker element with custom image
+        var el = document.createElement('div');
+        el.className = 'custom-marker';
+        el.style.backgroundImage = 'url(parking.svg)';
+        el.style.width = '25px'; // Adjust width as needed
+        el.style.height = '25px'; // Adjust height as needed
+
+        // Create marker instance using custom element
+        var marker = new mapboxgl.Marker(el)
             .setLngLat([lng, lat]) // Set marker coordinates
             .setPopup(new mapboxgl.Popup().setHTML(`<h3>${name}</h3>`)) // Add a popup with the name
             .addTo(map); // Add marker to the map
@@ -200,7 +250,7 @@
                 // Handle the API response data here
                 data.forEach(item => {
                     // Add marker and store the instance
-                    var marker = addMarker(item.longitude, item.latitude, item.name);
+                    var marker = addMarker2(item.longitude, item.latitude, item.name);
                     // Store marker instance in a variable or array
                     markers.push(marker);
                 });
@@ -234,9 +284,16 @@
 
 <script>
     // Function to add marker to the map
-    function addMarker(lng, lat, name) {
-        // Create a marker element
-        var marker = new mapboxgl.Marker()
+    function addMarker4(lng, lat, name) {
+        // Create a marker element with custom image
+        var el = document.createElement('div');
+        el.className = 'custom-marker';
+        el.style.backgroundImage = 'url(toll.svg)';
+        el.style.width = '25px'; // Adjust width as needed
+        el.style.height = '25px'; // Adjust height as needed
+
+        // Create marker instance using custom element
+        var marker = new mapboxgl.Marker(el)
             .setLngLat([lng, lat]) // Set marker coordinates
             .setPopup(new mapboxgl.Popup().setHTML(`<h3>${name}</h3>`)) // Add a popup with the name
             .addTo(map); // Add marker to the map
@@ -257,7 +314,7 @@
                 // Handle the API response data here
                 data.forEach(item => {
                     // Add marker and store the instance
-                    var marker = addMarker(item.longitude, item.latitude, item.name);
+                    var marker = addMarker4(item.longitude, item.latitude, item.name);
                     // Store marker instance in a variable or array
                     markers.push(marker);
                 });
@@ -291,9 +348,16 @@
 
 <script>
     // Function to add marker to the map
-    function addMarker(lng, lat, name) {
-        // Create a marker element
-        var marker = new mapboxgl.Marker()
+    function addMarker1(lng, lat, name) {
+        // Create a marker element with custom image
+        var el = document.createElement('div');
+        el.className = 'custom-marker';
+        el.style.backgroundImage = 'url(1.svg)';
+        el.style.width = '25px'; // Adjust width as needed
+        el.style.height = '25px'; // Adjust height as needed
+
+        // Create marker instance using custom element
+        var marker = new mapboxgl.Marker(el)
             .setLngLat([lng, lat]) // Set marker coordinates
             .setPopup(new mapboxgl.Popup().setHTML(`<h3>${name}</h3>`)) // Add a popup with the name
             .addTo(map); // Add marker to the map
@@ -314,7 +378,7 @@
                 // Handle the API response data here
                 data.forEach(item => {
                     // Add marker and store the instance
-                    var marker = addMarker(item.longitude, item.latitude, item.name);
+                    var marker = addMarker1(item.longitude, item.latitude, item.name);
                     // Store marker instance in a variable or array
                     markers.push(marker);
                 });
@@ -346,5 +410,6 @@
     });
 </script>
 
+ 
 </body>
 </html>
