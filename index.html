@@ -109,8 +109,8 @@
     .checkbox-label {
         font-size: 16px;
         margin-left: 10px;
-    }
-    </style>
+  }
+</style>
 </head>
 <body>
 
@@ -154,6 +154,8 @@
     });
 </script>
 
+
+
 <script>
     // Function to add marker to the map
     function addMarker3(lng, lat, name) {
@@ -173,14 +175,14 @@
     }
 
     // Function to remove marker from the map
-    function removeMarker(marker) {
+    function removeMarker4(marker) {
         marker.remove(); // Remove the marker from the map
     }
 
     // Function to make API call
     function callAPI() {
         // Make an API call to the specified endpoint
-        fetch('https://jalindar0-82ue.vercel.app/pump/coordinates')
+        fetch('http://localhost:5000/pump/coordinates')
             .then(response => response.json())
             .then(data => {
                 // Handle the API response data here
@@ -188,7 +190,8 @@
                     // Add marker and store the instance
                     var marker = addMarker3(item.longitude, item.latitude, item.name);
                     // Store marker instance in a variable or array
-                    markers.push(marker);
+                    console.log(item.longitude, item.latitude, item.name);
+                    markers4.push(marker);
                 });
                 console.log(data);
             })
@@ -199,7 +202,7 @@
     }
 
     // Array to store marker instances
-    var markers = [];
+    var markers4 = [];
 
     // Get reference to the checkbox
     const checkbox = document.getElementById('petrol-pump');
@@ -212,8 +215,8 @@
             callAPI();
         } else {
             // If unchecked, remove all markers
-            markers.forEach(removeMarker);
-            markers = []; // Clear the markers array
+            markers4.forEach(removeMarker4);
+            markers4 = []; // Clear the markers array
         }
     });
 </script>
@@ -228,23 +231,24 @@
         el.style.width = '25px'; // Adjust width as needed
         el.style.height = '25px'; // Adjust height as needed
 
+        var popupContent = `<h3>${name}</h3><p>Latitude: ${lat}, Longitude: ${lng}</p>`;
         // Create marker instance using custom element
         var marker = new mapboxgl.Marker(el)
             .setLngLat([lng, lat]) // Set marker coordinates
-            .setPopup(new mapboxgl.Popup().setHTML(`<h3>${name}</h3>`)) // Add a popup with the name
+            .setPopup(new mapboxgl.Popup().setHTML(popupContent)) // Add a popup with the name
             .addTo(map); // Add marker to the map
         return marker; // Return the marker instance
     }
 
     // Function to remove marker from the map
-    function removeMarker(marker) {
+    function removeMarker3(marker) {
         marker.remove(); // Remove the marker from the map
     }
 
     // Function to make API call
     function callAPIp() {
         // Make an API call to the specified endpoint
-        fetch('https://jalindar0-82ue.vercel.app/parking/coordinates')
+        fetch('http://localhost:5000/parking/coordinates')
             .then(response => response.json())
             .then(data => {
                 // Handle the API response data here
@@ -252,7 +256,7 @@
                     // Add marker and store the instance
                     var marker = addMarker2(item.longitude, item.latitude, item.name);
                     // Store marker instance in a variable or array
-                    markers.push(marker);
+                    markers3.push(marker);
                 });
                 console.log(data);
             })
@@ -263,7 +267,7 @@
     }
 
     // Array to store marker instances
-    var markers = [];
+    var markers3 = [];
 
     // Get reference to the checkbox
     const checkboxp = document.getElementById('parking');
@@ -276,8 +280,8 @@
             callAPIp();
         } else {
             // If unchecked, remove all markers
-            markers.forEach(removeMarker);
-            markers = []; // Clear the markers array
+            markers3.forEach(removeMarker3);
+            markers3 = []; // Clear the markers array
         }
     });
 </script>
@@ -301,14 +305,14 @@
     }
 
     // Function to remove marker from the map
-    function removeMarker(marker) {
+    function removeMarker2(marker) {
         marker.remove(); // Remove the marker from the map
     }
 
     // Function to make API call
     function callAPIt() {
         // Make an API call to the specified endpoint
-        fetch('https://jalindar0-82ue.vercel.app/toll-plaza/coordinates')
+        fetch('http://localhost:5000/toll-plaza/coordinates')
             .then(response => response.json())
             .then(data => {
                 // Handle the API response data here
@@ -316,7 +320,7 @@
                     // Add marker and store the instance
                     var marker = addMarker4(item.longitude, item.latitude, item.name);
                     // Store marker instance in a variable or array
-                    markers.push(marker);
+                    markers2.push(marker);
                 });
                 console.log(data);
             })
@@ -327,7 +331,7 @@
     }
 
     // Array to store marker instances
-    var markers = [];
+    var markers2 = [];
 
     // Get reference to the checkbox
     const checkboxt = document.getElementById('toll-plaza');
@@ -340,8 +344,8 @@
             callAPIt();
         } else {
             // If unchecked, remove all markers
-            markers.forEach(removeMarker);
-            markers = []; // Clear the markers array
+            markers2.forEach(removeMarker2);
+            markers2 = []; // Clear the markers array
         }
     });
 </script>
@@ -365,14 +369,14 @@
     }
 
     // Function to remove marker from the map
-    function removeMarker(marker) {
+    function removeMarker1(marker) {
         marker.remove(); // Remove the marker from the map
     }
 
     // Function to make API call
     function callAPIes() {
         // Make an API call to the specified endpoint
-        fetch('https://jalindar0-82ue.vercel.app/electric-substation/coordinates')
+        fetch('http://localhost:5000/electric-substation/coordinates')
             .then(response => response.json())
             .then(data => {
                 // Handle the API response data here
@@ -380,7 +384,7 @@
                     // Add marker and store the instance
                     var marker = addMarker1(item.longitude, item.latitude, item.name);
                     // Store marker instance in a variable or array
-                    markers.push(marker);
+                    markers1.push(marker);
                 });
                 console.log(data);
             })
@@ -391,7 +395,7 @@
     }
 
     // Array to store marker instances
-    var markers = [];
+    var markers1 = [];
 
     // Get reference to the checkbox
     const checkboxes = document.getElementById('nearest-electrical-station');
@@ -404,8 +408,8 @@
             callAPIes();
         } else {
             // If unchecked, remove all markers
-            markers.forEach(removeMarker);
-            markers = []; // Clear the markers array
+            markers1.forEach(removeMarker1);
+            markers1 = []; // Clear the markers array
         }
     });
 </script>
